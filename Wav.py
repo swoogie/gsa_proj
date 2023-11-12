@@ -3,6 +3,7 @@ import numpy as np
 class Wav:
     def __init__(self, filename):
         with wave.open(filename, 'r') as wav_file:
+            self.filename = filename
             self.n_channels, self.sampwith, self.framerate, self.n_frames, self.comptype, self.compname = wav_file.getparams()
             audio_frames = wav_file.readframes(self.n_frames)
             self.audio_signal = np.frombuffer(audio_frames, dtype=np.int16)

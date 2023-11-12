@@ -65,11 +65,4 @@ params, audio_signal, framerate = load_wav(wav_filename)
 
 min_max_signal = chunk_and_get_max_min(audio_signal, chunk_size)
 
-# plot_signal(audio_signal)
-
-timer = Timer()
-timer.start()
-plot_signal(audio_signal)
-timer.stop()
-
 plot_max_min_signal_time_axis(min_max_signal, chunk_size, framerate)
