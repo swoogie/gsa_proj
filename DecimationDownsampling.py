@@ -50,7 +50,7 @@ downsample_type = None
 while (downsample_type not in range(1, 4)):
     downsample_type = int(input("1. Decimation\n2. Linear Interpolation\n3. Polynomial Interpolation\nchoose which downsampling algorithm to use:"))
 
-downsample_factor = 10
+downsample_factor = 100
 
 if (downsample_type == 1):
     audio_signal_downsampled, new_framerate, sample_duration_downsampled = downsample_wav(
@@ -71,4 +71,4 @@ if (use_filter == 'y'):
         audio_signal_downsampled, cutoff_frequency, new_framerate)
 
 plot_signal(wav.audio_signal, wav.sample_duration, f'{wav.filename} original')
-plot_signal(audio_signal_downsampled, sample_duration_downsampled, f'{wav.filename} decimation')
+plot_signal(audio_signal_downsampled, sample_duration_downsampled, f'{wav.filename} linear interpolation')

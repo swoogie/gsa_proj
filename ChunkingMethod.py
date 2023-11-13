@@ -32,11 +32,13 @@ def chunk_and_get_max_min(signal, chunk_size):
 
 
 def plot_signal(signal):
-    plt.figure(figsize=(12, 4))
+    plt.figure(figsize=(12, 6))
+    plt.subplot(2, 1, 1)
     plt.plot(signal)
     plt.title('Averaged Chunked Signal')
     plt.xlabel('Chunk number')
     plt.ylabel('Average amplitude')
+    plt.grid(True)
     plt.show()
 
 
@@ -44,22 +46,24 @@ def plot_max_min_signal_time_axis(max_min_signal, chunk_size, framerate):
     timer = Timer()
     
     chunk_duration = chunk_size / framerate
-    time_axis = np.arange(len(max_min_signal)) * chunk_duration
+    time_axis = np.arange(len(max_min_signal)) * chunk_duration * 2
     max_values = max_min_signal[:, 0]
     min_values = max_min_signal[:, 1]
 
     timer.start()
-    plt.figure(figsize=(12, 4))
-    plt.fill_between(time_axis, min_values, max_values, color='skyblue')
+    plt.figure(figsize=(12, 6))
+    plt.subplot(2, 1, 1)
+    plt.fill_between(time_axis, min_values, max_values, color='#1f77b4', zorder=3)
     plt.title('Chunked Signal Range over Time')
-    plt.xlabel('Time (seconds)')
+    plt.xlabel('time (s)')
     plt.ylabel('Amplitude')
+    plt.grid(True)
     timer.stop()
     plt.show()
 
 
 wav_filename = Utils.select_file()
-chunk_size = 10  # chunk_size = 44100 average every second at 44100Hz sample rate
+chunk_size = 100  # chunk_size = 44100 average every second at 44100Hz sample rate
 
 params, audio_signal, framerate = load_wav(wav_filename)
 
