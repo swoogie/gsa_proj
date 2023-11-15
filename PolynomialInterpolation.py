@@ -15,3 +15,4 @@ def downsample_poly_wav(wav_object, factor, degree=3):
     sample_duration_downsampled = len(downsampled_signal) / new_framerate
 
     return downsampled_signal, new_framerate, sample_duration_downsampled
+

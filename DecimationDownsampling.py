@@ -1,21 +1,10 @@
 import numpy as np
-import wave
 import matplotlib.pyplot as plt
 import Utils
 from Timer import Timer
 from Wav import Wav
 import PolynomialInterpolation
 import LinearInterpolation
-
-
-
-def lowpass_filter(audio_signal, cutoff_freq, framerate):
-    filter_length = int(2 * framerate / cutoff_freq)
-    filter_coeff = np.ones(filter_length) / filter_length
-
-    filtered_signal = np.convolve(audio_signal, filter_coeff, mode='same')
-
-    return filtered_signal
 
 
 def downsample_wav(wav: Wav, downsample_factor: int):
@@ -62,13 +51,6 @@ if (downsample_type == 3):
     audio_signal_downsampled, new_framerate, sample_duration_downsampled = PolynomialInterpolation.downsample_poly_wav(
     wav, downsample_factor)
 
-use_filter = None
-while (use_filter != 'y' and use_filter != 'n'):
-    use_filter = input("use lowpass filter? (wip) y/n: ").lower()
-if (use_filter == 'y'):
-    cutoff_frequency = 0.2
-    audio_signal_downsampled = lowpass_filter(
-        audio_signal_downsampled, cutoff_frequency, new_framerate)
-
+Utils.print_params(wav)
 plot_signal(wav.audio_signal, wav.sample_duration, f'{wav.filename} original')
 plot_signal(audio_signal_downsampled, sample_duration_downsampled, f'{wav.filename} decimation')

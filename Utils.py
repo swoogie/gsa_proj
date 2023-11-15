@@ -30,3 +30,8 @@ def select_file():
                     print("Invalid selection.")
             except ValueError:
                 print("Invalid input. Please enter a valid number.")
+
+def print_params(wav: Wav):
+        wav_dict = vars(wav)
+        for prop, value in wav_dict.items():
+            print(f"{prop}: {value}")
