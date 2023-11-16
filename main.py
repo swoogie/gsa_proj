@@ -6,6 +6,7 @@ from Wav import Wav
 import PolynomialInterpolation
 import LinearInterpolation
 import Decimation
+import ChunkingMethod
 
 
 def plot_signal(audio_signal, sample_duration, title):
@@ -37,6 +38,7 @@ if __name__ == "__main__":
         "Decimation",
         "Linear Interpolation",
         "Polynomial Interpolation",
+        "Chunking",
     ]
 
     ds_choice = None
@@ -59,5 +61,9 @@ if __name__ == "__main__":
     if (ds_choice == downsample_types[2]):
         wav.audio_signal, wav.framerate, wav.sample_duration = PolynomialInterpolation.downsample(
             wav.audio_signal, wav.framerate, downsample_factor)
-
-    wav.plot(f'{wav.filename} {ds_choice} f={downsample_factor}')
+    if (ds_choice == downsample_types[3]):
+        min_max_signal = ChunkingMethod.chunk_and_get_max_min(wav.audio_signal, downsample_factor)
+        ChunkingMethod.plot_max_min_signal_time_axis(min_max_signal, downsample_factor, wav.framerate)
+        
+    if (ds_choice != downsample_types[3]):
+        wav.plot(f'{wav.filename} {ds_choice} f={downsample_factor}')

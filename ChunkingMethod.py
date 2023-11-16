@@ -46,7 +46,7 @@ def plot_max_min_signal_time_axis(max_min_signal, chunk_size, framerate):
     timer = Timer()
     
     chunk_duration = chunk_size / framerate
-    time_axis = np.arange(len(max_min_signal)) * chunk_duration * 2
+    time_axis = np.arange(len(max_min_signal)) * chunk_duration
     max_values = max_min_signal[:, 0]
     min_values = max_min_signal[:, 1]
 
@@ -60,13 +60,3 @@ def plot_max_min_signal_time_axis(max_min_signal, chunk_size, framerate):
     plt.grid(True)
     timer.stop()
     plt.show()
-
-
-wav_filename = Utils.select_file()
-chunk_size = 100  # chunk_size = 44100 average every second at 44100Hz sample rate
-
-params, audio_signal, framerate = load_wav(wav_filename)
-
-min_max_signal = chunk_and_get_max_min(audio_signal, chunk_size)
-
-plot_max_min_signal_time_axis(min_max_signal, chunk_size, framerate)
