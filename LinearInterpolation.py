@@ -1,25 +1,12 @@
 import numpy as np
 
-def downsample_linear_wav(wav_object, factor):
-    if factor <= 1 or not isinstance(factor, int):
-        raise ValueError("Downsampling factor must be a positive integer.")
+def linear_interpolation(data, original_sample_rate, factor):
+    indices = np.arange(0, len(data))
+    new_indices = np.arange(0, len(data), factor)
 
-    new_length = len(wav_object.audio_signal) // factor
+    interpolated_data = np.interp(new_indices, indices, data)
 
-    downsampled_signal = np.zeros(new_length)
+    new_sample_rate = int(original_sample_rate / factor)
+    new_duration = len(interpolated_data) / new_sample_rate
 
-    for i in range(new_length):
-        start_idx = i * factor
-        end_idx = min((i + 1) * factor, len(wav_object.audio_signal))
-
-        alpha = i * factor - start_idx
-
-        if end_idx >= len(wav_object.audio_signal):
-            end_idx = len(wav_object.audio_signal) - 1
-
-        downsampled_signal[i] = (1 - alpha) * wav_object.audio_signal[start_idx] + alpha * wav_object.audio_signal[end_idx]
-
-    new_framerate = wav_object.framerate // factor
-    sample_duration_downsampled = len(downsampled_signal) / new_framerate
-
-    return downsampled_signal, new_framerate, sample_duration_downsampled
+    return interpolated_data, new_sample_rate, new_duration
