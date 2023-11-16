@@ -1,5 +1,8 @@
 import wave
+import matplotlib.pyplot as plt
 import numpy as np
+from Timer import Timer
+
 class Wav:
     def __init__(self, filename):
         with wave.open(filename, 'r') as wav_file:
@@ -25,3 +28,18 @@ class Wav:
         self.audio_signal = extended_signal
         self.n_frames = len(extended_signal)
         self.sample_duration = len(extended_signal) / self.framerate
+
+    def plot(self, title):
+        time_axis = np.linspace(0, self.sample_duration, len(self.audio_signal))
+
+        plt.figure(figsize=(12, 6))
+        plt.title(title)
+        timer = Timer()
+        timer.start()
+        plt.plot(time_axis, self.audio_signal)
+        timer.stop()
+        plt.xlabel('time (s)')
+        plt.ylabel('Amplitude')
+        plt.grid(True)
+        plt.show()
+    

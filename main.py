@@ -31,6 +31,8 @@ if __name__ == "__main__":
     wav.extend(num_repeats)
     Utils.print_params(wav)
 
+    wav.plot(f'{wav.filename} original')
+
     downsample_types = [
         "Decimation",
         "Linear Interpolation",
@@ -49,16 +51,13 @@ if __name__ == "__main__":
         downsample_factor = int(input("Enter downsample factor f>0: "))
 
     if (ds_choice == downsample_types[0]):
-        audio_signal_downsampled, new_framerate, sample_duration_downsampled = Decimation.downsample(
+        wav.audio_signal, wav.framerate, wav.sample_duration = Decimation.downsample(
             wav, downsample_factor)
     if (ds_choice == downsample_types[1]):
-        audio_signal_downsampled, new_framerate, sample_duration_downsampled = LinearInterpolation.downsample(
+        wav.audio_signal, wav.framerate, wav.sample_duration = LinearInterpolation.downsample(
             wav.audio_signal, wav.framerate, downsample_factor)
     if (ds_choice == downsample_types[2]):
-        audio_signal_downsampled, new_framerate, sample_duration_downsampled = PolynomialInterpolation.downsample(
+        wav.audio_signal, wav.framerate, wav.sample_duration = PolynomialInterpolation.downsample(
             wav.audio_signal, wav.framerate, downsample_factor)
 
-    plot_signal(wav.audio_signal, wav.sample_duration,
-                f'{wav.filename} original')
-    plot_signal(audio_signal_downsampled, sample_duration_downsampled,
-                f'{wav.filename} {ds_choice} f={downsample_factor}')
+    wav.plot(f'{wav.filename} {ds_choice} f={downsample_factor}')
