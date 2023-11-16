@@ -25,8 +25,8 @@ def chunk_and_get_max_min(signal, chunk_size):
         end = start + chunk_size
         chunk = np.array(signal[start:end])
         if len(chunk) > 0:
-            max_min = (chunk.max(), chunk.min())
-            max_min_signal.append(max_min)
+            max_min_signal.append(chunk.max())
+            max_min_signal.append(chunk.min())
 
     return np.array(max_min_signal)
 
@@ -42,21 +42,21 @@ def plot_signal(signal):
     plt.show()
 
 
-def plot_max_min_signal_time_axis(max_min_signal, chunk_size, framerate):
+def plot_max_min_signal_time_axis(max_min_signal, sample_duration, audio_signal, title):
     timer = Timer()
     
-    chunk_duration = chunk_size / framerate
-    time_axis = np.arange(len(max_min_signal)) * chunk_duration
-    max_values = max_min_signal[:, 0]
-    min_values = max_min_signal[:, 1]
+    time_axis = np.linspace(0, sample_duration, len(audio_signal))
+    new_time_axis = np.linspace(0, sample_duration, len(max_min_signal))
+    print(len(audio_signal))
+    print(len(max_min_signal))
 
+    plt.figure(figsize=(15, 4))
+    plt.plot(time_axis, audio_signal, color='r', alpha=0.5)
     timer.start()
-    plt.figure(figsize=(12, 6))
-    plt.subplot(2, 1, 1)
-    plt.fill_between(time_axis, min_values, max_values, color='#1f77b4', zorder=3)
-    plt.title('Chunked Signal Range over Time')
+    plt.plot(new_time_axis, max_min_signal)
+    timer.stop()
+    plt.title(title)
     plt.xlabel('time (s)')
     plt.ylabel('Amplitude')
     plt.grid(True)
-    timer.stop()
     plt.show()

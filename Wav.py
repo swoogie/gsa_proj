@@ -30,16 +30,20 @@ class Wav:
         self.audio_signal = extended_signal
         self.n_frames = len(extended_signal)
         self.sample_duration = len(extended_signal) / self.framerate
+        self.new_audio_signal = self.audio_signal
+        self.new_sample_duration = self.sample_duration
 
     def plot(self, title):
         time_axis = np.linspace(0, self.sample_duration, len(self.audio_signal))
         new_time_axis = np.linspace(0, self.new_sample_duration, len(self.new_audio_signal))
 
-        plt.figure(figsize=(12, 6))
+        plt.figure(figsize=(15, 4))
         plt.title(title)
         timer = Timer()
         timer.start()
         plt.plot(time_axis, self.audio_signal, color='r', alpha=0.5)
+        timer.stop()
+        timer.start()
         plt.plot(new_time_axis, self.new_audio_signal)
         timer.stop()
         plt.xlabel('time (s)')
