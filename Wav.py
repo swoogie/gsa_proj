@@ -17,8 +17,8 @@ class Wav:
         return mono_audio_signal
 
     def extend(self, num_repeats):
-        if num_repeats < 0:
-            raise ValueError("Number of repeats should be equal or greater than 0")
+        if num_repeats <= 0:
+            raise ValueError("Number of repeats should be greater than 0")
 
         extended_signal = np.tile(self.audio_signal, num_repeats)
 

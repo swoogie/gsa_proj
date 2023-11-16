@@ -1,18 +1,13 @@
 import numpy as np
+from scipy.interpolate import interp1d
+def downsample(data, original_sample_rate, factor):
+    indices = np.arange(0, len(data))
+    new_indices = np.arange(0, len(data), factor)
 
-def downsample_poly_wav(wav_object, factor, degree=3):
-    if factor <= 1 or not isinstance(factor, int):
-        raise ValueError("Downsampling factor must be a positive integer.")
+    f = interp1d(indices, data, kind='cubic', fill_value="extrapolate")
+    interpolated_data = f(new_indices)
 
-    x = np.arange(0, len(wav_object.audio_signal))
-    new_x = np.arange(0, len(wav_object.audio_signal), factor)
+    new_sample_rate = int(original_sample_rate / factor)
+    new_duration = len(interpolated_data) / new_sample_rate
 
-    coeffs = np.polyfit(x, wav_object.audio_signal, deg=degree)
-    
-    downsampled_signal = np.polyval(coeffs, new_x)
-
-    new_framerate = wav_object.framerate // factor
-    sample_duration_downsampled = len(downsampled_signal) / new_framerate
-
-    return downsampled_signal, new_framerate, sample_duration_downsampled
-
+    return interpolated_data, new_sample_rate, new_duration
