@@ -53,14 +53,14 @@ if __name__ == "__main__":
         downsample_factor = int(input("Enter downsample factor f>0: "))
 
     if (ds_choice == downsample_types[0]):
-        wav.audio_signal, wav.framerate, wav.sample_duration = Decimation.downsample(
+        wav.new_audio_signal, wav.new_framerate, wav.new_sample_duration = Decimation.downsample(
             wav, downsample_factor)
     if (ds_choice == downsample_types[1]):
-        wav.audio_signal, wav.framerate, wav.sample_duration = LinearInterpolation.downsample(
-            wav.audio_signal, wav.framerate, downsample_factor)
+        wav.new_audio_signal, wav.new_framerate, wav.new_sample_duration = LinearInterpolation.downsample(
+            wav.new_audio_signal, wav.new_framerate, downsample_factor)
     if (ds_choice == downsample_types[2]):
-        wav.audio_signal, wav.framerate, wav.sample_duration = PolynomialInterpolation.downsample(
-            wav.audio_signal, wav.framerate, downsample_factor)
+        wav.new_audio_signal, wav.new_framerate, wav.new_sample_duration = PolynomialInterpolation.downsample(
+            wav.new_audio_signal, wav.new_framerate, downsample_factor)
     if (ds_choice == downsample_types[3]):
         min_max_signal = ChunkingMethod.chunk_and_get_max_min(wav.audio_signal, downsample_factor)
         ChunkingMethod.plot_max_min_signal_time_axis(min_max_signal, downsample_factor, wav.framerate)
