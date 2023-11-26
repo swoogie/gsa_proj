@@ -32,8 +32,6 @@ if __name__ == "__main__":
     wav.extend(num_repeats)
     Utils.print_params(wav)
 
-    wav.plot(f'{wav.filename} original')
-
     downsample_types = [
         "Decimation",
         "Linear Interpolation",
